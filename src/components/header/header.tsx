@@ -1,11 +1,15 @@
-import { UserOutlined } from '@ant-design/icons';
-import { Input, Select } from 'antd';
+import { Select } from 'antd';
 import React, { useState } from 'react';
 import type { SelectProps } from 'antd';
 import "./index.scss";
 import API from "../../API";
+import { Usertype } from "../../types";
 
-const Header = () => {
+interface HeaderProps {
+  setSelectedUser: (user: Usertype | null) => void;
+}
+
+const Header: React.FC<HeaderProps> = ({ setSelectedUser }) => {
   let timeout: ReturnType<typeof setTimeout> | null = null;
   let currentValue: string = "";
 
@@ -24,7 +28,7 @@ const Header = () => {
         });
 
         if (currentValue === value) {
-          const data = response.data.map((item: any) => ({
+          const data = response.data.map((item: Usertype) => ({
             value: item.id, 
             label: item.name, 
           }));
@@ -51,8 +55,14 @@ const Header = () => {
       fetchData(newValue, setData);
     };
 
-    const handleChange = (newValue: string) => {
+    const handleChange = async (newValue: string) => {
       setValue(newValue);
+      try {
+        const response = await API.get(`/users/${newValue}`);
+        setSelectedUser(response.data);  // ✅ Передаем пользователя в App.tsx
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
     };
 
     return (
@@ -74,10 +84,7 @@ const Header = () => {
   return (
     <header>
       <div>
-        <h1>Workers</h1>
-      </div>
-      <div>
-        <Input placeholder="Search workers..." prefix={<UserOutlined />} />
+        <h1 className='title'>Workers</h1>
       </div>
       <div>
         <SearchInput placeholder="Search workers..." />

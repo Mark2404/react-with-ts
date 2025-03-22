@@ -1,7 +1,17 @@
 header{
 
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding:  20px;
+}
+.container{
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.title{
+    
+    color: #333;
+    margin-right:40px ;
+    text-align: left;
 }
