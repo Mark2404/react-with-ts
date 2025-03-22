@@ -59,7 +59,7 @@ const Header: React.FC<HeaderProps> = ({ setSelectedUser }) => {
       setValue(newValue);
       try {
         const response = await API.get(`/users/${newValue}`);
-        setSelectedUser(response.data);  // ✅ Передаем пользователя в App.tsx
+        setSelectedUser(response.data); 
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
