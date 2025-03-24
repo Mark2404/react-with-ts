@@ -23,7 +23,7 @@ const App = () => {
         }
         getData();
     }, []);
-    
+
 
     return (
         <Router>
